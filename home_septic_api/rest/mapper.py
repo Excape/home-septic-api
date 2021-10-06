@@ -8,11 +8,10 @@ sewer_type_mapping = {
     SewerType.MUNICIPAL: 'Municipal'
 }
 
-def mapPropertySewerToRestResponse(propertySewer: PropertySewer) -> dict:
+def map_propertysewer_to_rest_response(propertySewer: PropertySewer) -> dict:
     """
     Maps model to the response type defined in the Namespace model (SewerResponse)
     """
-    print(propertySewer)
     return {
        'address': propertySewer.address,
        'zipcode': propertySewer.zip_code,

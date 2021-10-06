@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask_restplus import Api
-from .rest.homesepticresource import namespace
+from .homesepticresource import namespace
 
 septic_bp = Blueprint('septic_api', __name__, url_prefix='/api')
 

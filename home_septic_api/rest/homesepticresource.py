@@ -1,6 +1,6 @@
 from flask_restplus import Resource, fields, Namespace, reqparse
 from flask import current_app, request
-from ..homecanaryapi import HomeCanaryApi
+from ..homecanary.homecanaryapi import HomeCanaryApi
 from . import mapper 
 
 namespace = Namespace('sewer', 'Endpoint to get the type of sewer for a property')
@@ -46,10 +46,10 @@ class HomeSepticResource(Resource):
 
         api = HomeCanaryApi(current_app.config)
         
-        propertySewer = api.getPropertyDetails(requested_address, requested_zip_code)
-        
+        propertySewer = api.get_propertysewer(requested_address, requested_zip_code)
+
         if propertySewer is None:
             namespace.abort(404, 'Requested property was not found')
             return
 
-        return mapper.mapPropertySewerToRestResponse(propertySewer)
+        return mapper.map_propertysewer_to_rest_response(propertySewer)

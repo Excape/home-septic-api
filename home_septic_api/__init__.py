@@ -9,24 +9,16 @@ flask.helpers._endpoint_from_view_func = _endpoint_from_view_func
 werkzeug.cached_property = cached_property
 
 from flask import Flask
-from .blueprint import septic_bp
-from .homecanaryapi import HomeCanaryApi
-
-
-homecanary_api: HomeCanaryApi = None
+from .rest.blueprint import septic_bp
 
 def create_app(test_config=None):
     app = Flask(__name__)
 
     if test_config is None:
-        # load the instance config, if it exists, when not testing
         app.config.from_pyfile("../config.py", silent=False)
     else:
-        # load the test config if passed in
         app.config.from_mapping(test_config)
     
     app.register_blueprint(septic_bp)
-
-    homecanary_api = HomeCanaryApi(app.config)
 
     return app

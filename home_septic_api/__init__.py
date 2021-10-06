@@ -21,4 +21,7 @@ def create_app(test_config=None):
     
     app.register_blueprint(septic_bp)
 
+    # Disable "extra" field in Swagger doc
+    app.config["RESTPLUS_MASK_SWAGGER"] = False
+
     return app

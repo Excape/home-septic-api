@@ -9,7 +9,14 @@ api_extension = Api(
     title='Home Septic API',
     version='1.0',
     description='API to check what type of sewer system a property has',
-    doc='/doc'
+    doc='/doc',
+    authorizations={
+        'apikey': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'X-API-KEY'
+        }
+    }
 )
 
 api_extension.add_namespace(namespace)

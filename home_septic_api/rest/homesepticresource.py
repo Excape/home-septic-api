@@ -1,7 +1,7 @@
 from flask_restplus import Resource, fields, Namespace, reqparse
 from flask import current_app, request
 from ..homecanary.homecanaryapi import HomeCanaryApi
-from . import mapper 
+from . import mapper, auth
 
 namespace = Namespace('sewer', 'Endpoint to get the type of sewer for a property')
 
@@ -30,9 +30,15 @@ class HomeSepticResource(Resource):
     @namespace.marshal_list_with(sewer_response_model)
     @namespace.expect(parser)
     @namespace.response(400, 'missing arguments')
-    @namespace.response(500, 'internal API error')
+    @namespace.response(401, 'not authorized')
     @namespace.response(404, 'requested property not found by API')
+    @namespace.response(500, 'internal API error')
+    @namespace.doc(security='apikey')
     def get(self):
+        if not auth.is_authorized(request):
+            namespace.abort(401, 'Unauthorized. Please provide an API key in the X-API-KEY header')
+            return
+        
         args = request.args
         if ('address' not in args):
             namespace.abort(400, 'Missing argument address')

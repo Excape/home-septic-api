@@ -5,5 +5,5 @@ setup(
     version="1.0.0",
     packages=find_packages(),
     zip_safe=False,
-    install_requires=["flask", "flask-restplus"],
+    install_requires=["flask", "flask-restplus", "requests"],
 )
